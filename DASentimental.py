@@ -6,6 +6,7 @@ Created on Sat Nov 20 11:56:32 2021
 @author: asrafatima
 """
 
+import nltk
 import spacy
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -25,9 +26,12 @@ import sys
 
 warnings.filterwarnings("ignore")
 
+nltk.download("stopwords")
+nltk.download("wordnet")
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-nlp2 = spacy.load('en_core_web_md')
+nlp2 = spacy.load('en_core_web_sm')
 stopword = stopwords.words('english')
 stopword.extend(['take', 'call', 'get', 'first', 'second', 'third', 'need', 'needs', 'dont', 'want', 'give', 'go', 'given', 'turns', 'way', 'i\'m', 'seems', 'place',
                  'one', 'find', 'told', 'feeling', 'year', 'years', 'told', 'say', 'went', 'got', 'thing', 'take', 'taking', '\'m', '\'re', 'become', 'became', 'made', 'life'])
@@ -48,7 +52,8 @@ def outer(cell):
 with open('deployables/lemmedWords.pkl', 'rb') as f:
     lemmedWords = pickle.load(f)
 antonyms = pd.read_pickle("deployables/antonyms.pkl")
-G = nx.read_gpickle("deployables/graph.pkl")
+with open("deployables/graph.pkl", "rb") as f:
+    G = pickle.load(f)
 flatDF_weight = pd.read_pickle("deployables/flatDF.pkl")
 
 lemmedIndex = dict()

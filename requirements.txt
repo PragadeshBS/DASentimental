@@ -1,8 +1,6 @@
-python
 spacy
 networkx
 nltk
-pickle
 pandas
 numpy
 scipy
